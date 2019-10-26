@@ -61,9 +61,9 @@ def post_website(request):
             form = WebsitePostForm(request.POST, request.FILES)
             # print(pf.is_valid())
             if form.is_valid():
-                form.save()
-                post = Post.objects.last()
-                post.save_post(user)
+                post=form.save(commit=False)
+                post.user=current_user
+                post.save()
                 # return redirect(reverse('rate_website', args=(post.id,)))
         else:
             form = WebsitePostForm()

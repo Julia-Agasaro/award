@@ -48,7 +48,7 @@
         <!-- Actual navigation bar which is hella functional -->
         <div>
             <nav class="nav border-top border-dark">
-                <div class="container-fluid px-0 d-flex justify-content-between nav-border text-white-50">
+                <div class="container-fluid px-0 d-flex justify-content-between nav-border text-black-50">
                     <div id="menu-toogle" class="d-flex align-items-center w-25 pl-4">
                         <span class="mr-2">
                             <img id="img-icon" src="{% static 'img/meubars.png' %}" alt="">
@@ -59,7 +59,7 @@
                                 {% csrf_token %}
                                 <a class="mb-0 d-flex align-items-center" id="search-button">
                                     <img id="img-icon" src="{% static 'img/search.png' %}" alt="">
-                                    <input class="form-control input-height border-0 ml-2 bg-transparent text-white"
+                                    <input class="form-control input-height border-0 ml-2 bg-transparent text-black"
                                         type="text" placeholder="Search" name="post">
                                 </a>
                                 <button class="btn btn-sm d-none" type="submit"></button>
@@ -74,12 +74,13 @@
                     <div id="login-submit" class="d-flex align-items-center w-25">
                         {% if user.is_authenticated %}
                         <div class="navbar-brand"></a>
-                            <a class="nav-link text-black-50" href="/userdetails/{{ user.id }}/{{ user.username }}">
+                            <a class="nav-link text-black-50" href="{% url 'profile'  %}">
                                 <span class="">Profile</span>
                             </a>
-                            <a href="/userdetails/{{ user.id }}/{{ user.username }}" class="md-icon d-flex justify-content-center rounded-circle border border-secondary mx-1">
-                                <img class="h-100 judge-btn" src="{{ user.profile.profile_photo.url }}" alt="">
-                            </a>
+                            <a class="nav-link text-black-50" href="{% url 'profile_api'  %}">
+                                    <span class="">Profile API</span>
+                                </a>
+                           
                         </div>
                         <a class="f-12 font-weight-bold mx-2 px-1 ml-auto nav-link text-black-50" href="/logout" style="color: black">logout</a>
 

@@ -1,7 +1,7 @@
 from django import forms
 # fill in custom user info then save it
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import *
 
 
 class UpdateProfileForm(forms.ModelForm):

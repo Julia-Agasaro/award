@@ -32,23 +32,19 @@ class Profile(models.Model):
     def __str__(self):
        return self.bio
 
-# class Post(models.Model):
-#     uploader = models.ForeignKey(User, null=True, related_name='posts')
-#     name = models.CharField(max_length=200, null=True)
-#     country = models.CharField(max_length=50, null=True)
-#     landing_image = models.ImageField(upload_to='site-images/', null=True)
-#     screenshot_1 = models.ImageField(upload_to='site-images/', null=True)
-#     screenshot_2 = models.ImageField(upload_to='site-images/', null=True)
-#     screenshot_3 = models.ImageField(upload_to='site-images/', null=True)
-#     screenshot_4 = models.ImageField(upload_to='site-images/', null=True)
-#     screenshot_5 = models.ImageField(upload_to='site-images/', null=True)
-#     screenshot_6 = models.ImageField(upload_to='site-images/', null=True)
+class Post(models.Model):
+    uploader = models.ForeignKey(User, null=True, related_name='posts')
+    name = models.CharField(max_length=200, null=True)
+    country = models.CharField(max_length=50, null=True)
+    landing_image = models.ImageField(upload_to='images/', null=True)
+    screenshot_1 = models.ImageField(upload_to='images/', null=True)
+    screenshot_2 = models.ImageField(upload_to='images/', null=True)
 
-#     description = models.TextField(blank=True)
-#     site_link = models.CharField(max_length=200, null=True)
-#     post_date = models.DateTimeField(auto_now_add=True)
+    description = models.TextField(blank=True)
+    site_link = models.CharField(max_length=200, null=True)
+    post_date = models.DateTimeField(auto_now_add=True)
 
-#     @classmethod
-#     def all_posts(cls):
-#         all_posts = cls.objects.all()
-#         return all_posts
+    @classmethod
+    def all_posts(cls):
+        all_posts = cls.objects.all()
+        return all_posts

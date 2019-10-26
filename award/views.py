@@ -20,6 +20,7 @@ class ProfileList(APIView):
 # Create your views here.
 @login_required(login_url='/accounts/login/')
 def home(request):
+    posts = Post.objects.all()
     return render(request, 'home.html')
 
 
@@ -51,3 +52,24 @@ def editProfile(request):
     else:
         form=UpdateProfileForm()
     return render(request,'editProfile.html',{"form":form})
+
+
+def post_website(request):
+    if request.user.is_authenticated:
+        user = request.user
+        if request.method == 'POST':
+            form = WebsitePostForm(request.POST, request.FILES)
+            # print(pf.is_valid())
+            if form.is_valid():
+                form.save()
+                post = Post.objects.last()
+                post.save_post(user)
+                # return redirect(reverse('rate_website', args=(post.id,)))
+        else:
+            form = WebsitePostForm()
+
+        context = {
+            'form': form
+        }
+        return render(request, 'upload.html', context)
+    return redirect('home')

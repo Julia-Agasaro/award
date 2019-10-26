@@ -53,7 +53,7 @@ def editProfile(request):
         form=UpdateProfileForm()
     return render(request,'editProfile.html',{"form":form})
 
-
+@login_required(login_url='/accounts/login/')
 def post_website(request):
     if request.user.is_authenticated:
         user = request.user

@@ -84,13 +84,14 @@
                         </div>
                         <a class="f-12 font-weight-bold mx-2 px-1 ml-auto nav-link text-black-50" href="/logout" style="color: black">logout</a>
 
+                        <a href="{% url 'post_website' %}" class="nav-link f-12 font-weight-bold px-4 h-100 btn-black d-flex align-items-center text-light">SUBMIT
+                            YOUR SITE</a>
                         {% else %}
                         <a href="/accounts/login" class="f-12 font-weight-bold mr-3 ml-auto nav-link text-white-50" style="color: black">REGISTER
                             /
                             LOGIN</a>
                         {% endif %}
-                        <a href="{% url 'post_website ' %}" class="nav-link f-12 font-weight-bold px-4 h-100 btn-black d-flex align-items-center text-light">SUBMIT
-                            YOUR SITE</a>
+                        
                     </div>
                 </div>
             </nav>

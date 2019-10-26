@@ -55,6 +55,7 @@ def editProfile(request):
 
 @login_required(login_url='/accounts/login/')
 def post_website(request):
+    current_user=request.user
     if request.user.is_authenticated:
         user = request.user
         if request.method == 'POST':

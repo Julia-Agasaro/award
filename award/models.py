@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    prof_user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     first_name = models.CharField(max_length=50, null=True)
     last_name = models.CharField(max_length=50, null=True)
     profile_photo = models.ImageField(upload_to='images/', blank=True)
@@ -33,18 +33,35 @@ class Profile(models.Model):
        return self.bio
 
 class Post(models.Model):
-    uploader = models.ForeignKey(User, null=True, related_name='posts')
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length=200, null=True)
     country = models.CharField(max_length=50, null=True)
     landing_image = models.ImageField(upload_to='images/', null=True)
-    screenshot_1 = models.ImageField(upload_to='images/', null=True)
-    screenshot_2 = models.ImageField(upload_to='images/', null=True)
-
     description = models.TextField(blank=True)
     site_link = models.CharField(max_length=200, null=True)
     post_date = models.DateTimeField(auto_now_add=True)
+    user_project_id = models.IntegerField(default=0)
+    design = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0)
+    usability = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0)
+    content = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0)
+    vote_submissions = models.IntegerField(default=0)
+
+    
 
     @classmethod
     def all_posts(cls):
         all_posts = cls.objects.all()
         return all_posts
+
+    @classmethod
+    def search_project_by_name(cls,search_term):
+        project = cls.objects.filter(name__icontains=search_term)
+        return project
+
+    @classmethod
+    def get_single_project(cls, project):
+        project = cls.objects.get(id=project)
+        return project
+
+    class Meta:
+        ordering = ['-id']

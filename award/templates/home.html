@@ -1,7 +1,33 @@
 {% extends 'base.html' %}
-{% load static %}
-{{block.super}}
+{% load bootstrap4%}
 {% block content %}
 
+<div class="container-fluid main"><br><br><br>
+    <div class="templates d-flex flex-row">
+         {% for post in posts %}
+        <div class="col-md-4 mt-4">
+            <div class="card profile-card-5">
+               <!-- <img style="height:900px;width:1000px;" src="{posts.landing_image.url}"alt="" class="card-img-top" ></div> -->
+                <img src="{{ post.landing_image.url }}"; style="height:200px">
+                    <div class="card-body pt-0">
+                        <h5 class="card-title">{{post.name}}</h5>
+                        <p class="card-text">{{post.decription}}</p>
+                        <a href="{{post.site_link}}"
+                           class="btn btn-primary">Live Project Link</a>
+                           <a href="{% url 'project_review'  %}" class="btn btn-primary btn-md">Review Project</a>
+                        <p class="text-capitalize py-1">Posted by : </p>
+                     </div>
+    
+            </div>
+        </div>
+  
+         {%endfor%}
+
+
+    </div>  
+</div>
+
+
+             
 
 {% endblock %}

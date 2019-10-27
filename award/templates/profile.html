@@ -1,58 +1,73 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<br><br><br>
-<div class="container">
-  {%  if profile %}
 
-    <div class="row" style="padding-bottom:20px">
-      <div class="col-md-4">
-        <img class="img-responsive img-circle" src="{{profile.profile_photo.url}}" alt="" style="width:170px; height:170px">
-      </div>
-      <div class="col-md-8">
-        <!-- <h2><strong>{{profile.user}}</strong></h2>
-        <h4><strong>{{images|length}}</strong> Post{{images|pluralize}} </h4> -->
-        <h4>{{profile.bio}}</h4>
-        <h4>{{profile.email}}</h4>
-        {%if profile.user.id == user.id%}
-           <a class="btn btn-default btn-lg" href="{% url 'updateProfile' %}">
-               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Edit Profile
-             </a>
-         {%endif%}
-      </div>
-    </div>
- 
-  {%else%}
-      <div class="col-md-4">
-        <img class="center-block img-responsive img-circle" src="../../../static/images/bad-profile-pic-2.jpeg" alt="" style="width:170px; height:170px">
-      </div>
-      <div class="col-md-8">
-        <h2><strong>{{user}}</strong></h2>
-        <h4><strong>0</strong> Post </h4>
-        <h4>An Awesome Bio Will Appear Here</h4>
-        <a class="btn btn-sm btn-primary" href="{% url 'updateProfile' %}"> Update Profile</a>
-      </div>
-    </div>
-  {%endif%}
-<hr>    
-<div class="row">
-   <div class="container">
-   {%if images%}
-   {% for image in images%}
-     <div class="col-md-4">                
-          <div class="hovereffect thumbnail">
-                   <img class="img-responsive" src="{{image.image.url}}" alt="">
-         </div>
-     </div>
-   {%endfor%}
-   {%else%}
-     {%if profile.user.id == user.id%}
-         <h3 class="text-center">You havent posted any images yet. Get started by posting one here</a></h3>
-     {%else%}
-       <h3 class="text-center">This user hasn't created any posts yet.</h3>
-     {%endif%}
-   {%endif%}
-   </div>
- </div>
+
+<div class="container" style="margin-top:30px;">
+<h1 class="text-center heading"><i class="fas fa-award"></i> AWARDS</h1>
+    
+    
 </div>
-{%endblock%}
+
+
+
+<div class="row profile" style="height:80vh; margin-top:50px; background-color:wheat; width:101%;">
+
+        <div class="col-md-2" style="margin-left:30px;">
+            {% if profile.profile_photo %}
+             <h3 class="text-center" style="margin-top:30px; margin-left:600px;">{{user}}</h3>
+            <img src="{{profile. profile_photo.url}}" alt="{{user}}" class="img-responsive" style="width: 36rem; margin-top:40px;">
+            {% else %}
+             <h3 class="text-center" style="margin-top:30px; margin-left:500px;">{{user}}</h3>
+            <img src="/media/prof_pics/Avatar.png" alt="No Profile Pic" style="margin-top:40px;">
+            {% endif %}
+        </div>
+
+        <div class="col-md-4"></div>
+
+        <div class="col-md-5" style="margin-top:120px;">
+        
+       
+        
+                  
+      
+        
+            <p style="margin-left:20px;margin-top: 30px;"><strong>Bio: </strong>{{profile.bio}}</p>
+            <p style="margin-left:20px;"><strong>Contact Info: </strong>{{profile.email}}</p>
+        
+
+                       
+                <a href="{% url 'updateProfile' %}" class="btn btn-primary" style="margin-left:200px;margin-top:25px;">Edit Profile</a>
+                
+            </div>          
+
+    </div>
+
+
+
+<div class="row" style="margin-top:30px; height:80vh; background-color:grey;">
+        <div class="row text-center">
+            <h3 style="margin-left:600px; margin-top:30px; font-size:bold;">Projects</h3>
+        </div>
+
+        <!-- Card deck -->
+        <div class="card-deck" style="margin-right:40px; margin-left:40px; margin-top:40px; height:40; margin-bottom:40px;">
+            {% for single_project in projects %}
+            <!-- Card -->
+            <div class="col-md-4">
+                <div class="card mb-3" style="height:100%;">
+
+                    <!--Card image-->
+                    <div class="view overlay">
+                        <img class="card-img-top" src="{{single_project.landing_image.url}}" alt="{{single_project.name}}">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Card deck -->
+
+    </div>
+
+
+
+{% endblock %}

@@ -6,9 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import *
 from .models import *
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import  Profile
 from .serializer import ProfileSerializer
 
 class ProfileList(APIView):
@@ -21,22 +21,9 @@ class ProfileList(APIView):
 @login_required(login_url='/accounts/login/')
 def home(request):
     posts = Post.objects.all()
-    return render(request, 'home.html')
-
-
-@login_required(login_url='/accounts/login/')
-def profile(request, username=None):
-   '''
-   Method that fetches a users profile page
-   '''
-   current_user=request.user
-   profile= Profile.objects.get(user=current_user)
-   # images = Image.objects.filter(profile = profile_id)
-   # title = User.objects.get(pk = profile_id).username
-#    profile = Profile.objects.filter(user = current_user).all()
-   print(f'profile {profile.bio}')
-   return render(request, 'profile.html',{"profile":profile})
    
+    return render(request, 'home.html',{'posts':posts})
+
 @login_required(login_url='/accounts/login/')
 def editProfile(request):
     current_user=request.user
@@ -52,6 +39,23 @@ def editProfile(request):
     else:
         form=UpdateProfileForm()
     return render(request,'editProfile.html',{"form":form})
+
+@login_required(login_url='/accounts/login/')
+def profile(request, username=None):
+
+    current_user=request.user
+    projects = Post.objects.filter(user = current_user)
+
+    try:   
+        prof = Profile.objects.get(prof_user=current_user)
+    except ObjectDoesNotExist:
+        return redirect('updateProfile')
+
+  
+
+    return render(request, 'profile.html',{"profile":prof,'projects':projects})
+   
+
 
 @login_required(login_url='/accounts/login/')
 def post_website(request):
@@ -74,3 +78,48 @@ def post_website(request):
         }
         return render(request, 'upload.html', context)
     return redirect('home')
+
+@login_required(login_url='/accounts/login/')
+def search(request):
+
+    if 'project' in request.GET and request.GET ["project"]:
+        search_term = request.GET.get("project")
+        searched_projects = Post.search_project_by_name(search_term)
+        message = f'{search_term}'
+
+        return render(request, 'search.html', {"message":message, "projects":searched_projects})
+
+    else:
+        message = "No search results yet!"
+        return render (request, 'search.html', {"message": message})
+
+@login_required(login_url='/accounts/login/')
+def project_review(request,project_id):
+    try:
+        single_project = Post.get_single_project(project_id)
+        average_score = round(((single_project.design + single_project.usability + single_project.content)/3),2)
+        if request.method == 'POST':
+            vote_form = VoteForm(request.POST)
+            if vote_form.is_valid():
+                single_project.vote_submissions+=1
+                if single_project.design == 0:
+                    single_project.design = int(request.POST['design'])
+                else:
+                    single_project.design = (single_project.design + int(request.POST['design']))/2
+                if single_project.usability == 0:
+                    single_project.usability = int(request.POST['usability'])
+                else:
+                    single_project.usability = (single_project.usability + int(request.POST['usability']))/2
+                if single_project.content == 0:
+                    single_project.content = int(request.POST['content'])
+                else:
+                    single_project.content = (single_project.content + int(request.POST['usability']))/2
+
+                single_project.save()
+                return redirect('project_review',project_id)
+        else:
+            vote_form = VoteForm()
+
+    except Exception as  e:
+        raise Http404()
+    return render(request,'project_review.html',{"vote_form":vote_form,"single_project":single_project,"average_score":average_score})

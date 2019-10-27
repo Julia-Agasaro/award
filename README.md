@@ -1,6 +1,6 @@
 # award
 # Description
-A website that hosts other websites for users to review. Created by Murtallah Omtatah 4/7/2019
+A website that hosts other websites for users to review. 
 
 # Technologies used
 - Python 3.6

@@ -14,5 +14,10 @@ class WebsitePostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ('name', 'landing_image',
-                  'screenshot_1', 'screenshot_2','description', 'site_link', 'country')
+        fields = ('name', 'landing_image','description', 'site_link', 'country')
+
+
+class VoteForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('design','usability','content')

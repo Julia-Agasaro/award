@@ -33,12 +33,17 @@ def home(request):
 @login_required(login_url='/accounts/login/')
 def editProfile(request):
     current_user=request.user
+    prof = Profile.objects.filter(prof_user=current_user)
+    print(prof)
+    if prof:
+        return redirect('profile')
+
     if request.method =='POST':
         form = UpdateProfileForm(request.POST,request.FILES)
 
         if form.is_valid():
               profile=form.save(commit=False)
-              profile.user=current_user
+              profile.prof_user=current_user
               profile.save()
         return redirect('profile')
 
@@ -54,7 +59,7 @@ def profile(request, username=None):
 
     try:   
         prof = Profile.objects.get(prof_user=current_user)
-        
+
     except ObjectDoesNotExist:
         return redirect('updateProfile')
 

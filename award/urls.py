@@ -12,7 +12,7 @@ urlpatterns=[
     url(r'^api/project/$', views.PostList.as_view(),name = 'project_api'),
     url(r'^new/post/$', views.post_website, name='post_website'),
     url(r'^search', views.search, name='search'),
-    url(r'^project/review/',views.project_review,name='project_review'),
+    url(r'^project/review/(\d+)',views.project_review,name='project_review'),
 ]
 if settings.DEBUG:
     urlpatterns+= static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

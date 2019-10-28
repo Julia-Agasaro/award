@@ -9,12 +9,18 @@ from .models import *
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializer import ProfileSerializer
+from .serializer import ProfileSerializer, PostSerializer
 
 class ProfileList(APIView):
     def get(self, request, format=None):
         all_profile = Profile.objects.all()
         serializers = ProfileSerializer(all_profile, many=True)
+        return Response(serializers.data)
+
+class PostList(APIView):
+    def get(self, request, format=None):
+        all_post = Post.objects.all()
+        serializers = PostSerializer(all_post, many=True)
         return Response(serializers.data)
 
 # Create your views here.
@@ -48,6 +54,7 @@ def profile(request, username=None):
 
     try:   
         prof = Profile.objects.get(prof_user=current_user)
+        
     except ObjectDoesNotExist:
         return redirect('updateProfile')
 

@@ -19,23 +19,24 @@ Pip
 # Setting up environment variables
 Create a .env file and paste paste the following filling where appropriate:
 
-SECRET_KEY='<YOUR_SECRET_KEY_HERE>
-DEBUG=True #set to false in production
-DB_NAME=<YOUR_DATA_BASE_NAME>
-DB_USER=<YOUR_DATA_BASE_USER>
-DB_PASSWORD=<YOUR_DATA_BASE_PASSWORD>
-DB_HOST='127.0.0.1'
-MODE='dev' #set to 'prod' in production
-ALLOWED_HOSTS='.localhost', '.herokuapp.com', '.127.0.0.1'
-DISABLE_COLLECTSTATIC=1
+- SECRET_KEY='<YOUR_SECRET_KEY_HERE>
+- DEBUG=True #set to false in production
+- DB_NAME=<YOUR_DATA_BASE_NAME>
+- DB_USER=<YOUR_DATA_BASE_USER>
+- DB_PASSWORD=<YOUR_DATA_BASE_PASSWORD>
+- DB_HOST='127.0.0.1'
+- MODE='dev' #set to 'prod' in production
+- ALLOWED_HOSTS='.localhost', '.herokuapp.com', '.127.0.0.1'
+- DISABLE_COLLECTSTATIC=1
+
 # Install dependancies
 ## Install dependancies that will create an environment for the app to run
 
-pip install -r requirements.txt
-Run migrations
-python manage.py migrate
-Run the app
-python manage.py runserver
+- pip install -r requirements.txt
+- Run migrations
+- python manage.py migrate
+- Run the app
+- python manage.py runserver
 
 
 # Contact

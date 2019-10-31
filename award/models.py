@@ -26,8 +26,11 @@ class Profile(models.Model):
     address = models.IntegerField(null=True)
 
     def save_profile(self, current_user):
-        self.user = current_user
+        self.prof_user = current_user
         self.save()
+
+    def delete_profile(self):
+        self.delete()
 
     def __str__(self):
        return self.bio
@@ -46,7 +49,11 @@ class Post(models.Model):
     content = models.IntegerField(choices=list(zip(range(0, 11), range(0, 11))), default=0)
     vote_submissions = models.IntegerField(default=0)
 
-    
+    def save_post(self):
+        self.save()
+
+    def delete_post(self):
+        self.delete()
 
     @classmethod
     def all_posts(cls):

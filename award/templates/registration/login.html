@@ -4,7 +4,7 @@
 
         <div class="col-md-9">
 
-                <img class="card-img-top" src="https://images.unsplash.com/photo-1509822929063-6b6cfc9b42f2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80j" alt="" style="height: auto;width: 100%">
+                <img class="card-img-top" src="https://images.unsplash.com/photo-1509822929063-6b6cfc9b42f2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" alt="" style="height: auto;width: 100%">
             </div>
 </div>
     <div class="row">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="card-body">
                     <form action="" method="POST">
-                        {%csrf_token%}
+                            {% csrf_token %}
                         {%bootstrap_form form%}
                         <button type="submit" class="btn btn-primary btn-block btn-lg">Sign in</button>
                         Don't have an account?<a href="/accounts/register">Signup</a>
